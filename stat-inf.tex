@@ -1,0 +1,637 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Statistical Inference},
+            pdfauthor={Himank Jain},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Statistical Inference}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Himank Jain}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{08/08/2019}
+
+
+\begin{document}
+\maketitle
+
+\hypertarget{probability}{%
+\section{Probability:}\label{probability}}
+
+Probability is a measure quantifying the likelihood that events will
+occur. Probability quantifies as a number between 0 and 1, where,
+sparsly speaking, 0 indicates impossibility and 1 indicates certainty.
+The higher the probability of an event, the more likely it is that the
+event will occur. A simple example is the tossing of a fair (unbiased)
+coin. Since the coin is fair, the two outcomes (``heads'' and ``tails'')
+are both equally probable; the probability of ``heads'' equals the
+probability of ``tails''; and since no other outcomes are possible, the
+probability of either ``heads'' or ``tails'' is 1/2 (which could also be
+written as 0.5 or 50\%)
+
+Let A and B be two events then:
+
+\[P(A \cup B)=P(A)+P(B)-P(A \cap B) \]
+
+if A and B are independent events then:
+
+\(P(A\cap B)=P(A)P(B)\)
+
+\hypertarget{probability-mass-function}{%
+\subsection{Probability Mass
+Function:}\label{probability-mass-function}}
+
+\hypertarget{random-variable}{%
+\subsubsection{Random variable:}\label{random-variable}}
+
+A random variable is a numerical outcome of an experiment. Discrete or
+Continuous Example : Flip of a coin (0 or 1), roll of a dice
+
+A probability mass function evaluated at a value corresponds to the
+probability that a random variable takes that value.A valid pmf must
+satisfy: 1) \(P >=0\) 2) \(\sum p=1\)
+
+Example: Consider rolling a fair (unbiased) dice. The probability of any
+face turning up is \(1/6\).
+\includegraphics{C:/Users/himank/Documents/R/coursera/pmf.png}
+
+\hypertarget{probability-density-function}{%
+\subsection{Probability Density
+Function:}\label{probability-density-function}}
+
+A probability density function (pdf) is a function associated with a
+continuous random variable. A valid pdf must satisfy: 1) \[p(x)>=0\]
+everywhere 2) \[ \int p(x)dx=1 \] Total area under the curve is equal to
+\(1\). Area under pdf correspond to probability for that random
+variable. \includegraphics{C:/Users/himank/Documents/R/coursera/pdf.png}
+
+\hypertarget{cumulative-distribution-function-survival-function}{%
+\subsubsection{Cumulative Distribution Function \& Survival
+Function:}\label{cumulative-distribution-function-survival-function}}
+
+Cumulative Distribution Function (CDF) of a random variable \(X\),
+returns the probability that the random variable is less than or equal
+to the value \(x\) \(F(x)=P(X<=x)\)
+
+Survivial function of a random variable \(X\), returns the probability
+that the random variable is more than the value \(x\) \(F(x)=P(X>x)\)
+
+\hypertarget{quantiles-quartiles}{%
+\subsubsection{Quantiles \& Quartiles:}\label{quantiles-quartiles}}
+
+In statistics and probability quantiles are cut points dividing the
+range of a probability distribution into continuous intervals with equal
+probabilities, or dividing the observations in a sample in the same way.
+There is one fewer quantile than the number of groups created. Thus
+quartiles are the three cut points that will divide a dataset into four
+equal-sized groups. A quartile is a type of quantile. The first quartile
+(Q1) is defined as the middle number between the smallest number and the
+median of the data set. The second quartile (Q2) is the median of the
+data. The third quartile (Q3) is the middle value between the median and
+the highest value of the data set.
+
+\begin{figure}
+\centering
+\includegraphics{C:/Users/himank/Documents/R/coursera/quartiles.png}
+\caption{quartiles}
+\end{figure}
+
+\hypertarget{conditional-probability}{%
+\section{Conditional Probability:}\label{conditional-probability}}
+
+The probability of an event A, given that another B has already
+occurred. \(P(A/B)=\frac {P(A\cap B)}{P(B)}\) If A and B are
+independent: \(P(A/B)=P(A)\)
+
+\hypertarget{bayes-theorem}{%
+\subsection{Bayes Theorem:}\label{bayes-theorem}}
+
+Bayes' theorem describes the probability of an event, based on prior
+knowledge of conditions that might be related to the event. For example,
+if cancer is related to age, then, using Bayes theorem, a person's age
+can be used to more accurately assess the probability that they have
+cancer, compared to the assessment of the probability of cancer made
+without knowledge of the person's age.
+
+\(P(B/A)=\frac {P(A/B)P(B)}{P(A/B)P(B)+P(A/B')P(B')}\)
+
+For instance, let \(+\) and \(-\) be the events that the result of a
+diagnostic test is Positive or Negative respectively. Let D and D' be
+the events that the subject has or does not have the disease
+respectively. Then, Sensitivity = \(P(+/D)\) = \(\frac {TP}{TP+FN}\)
+Specificity = \(P(-/D')\) = \(\frac {TN}{TN+FP}\) Positive Predicted
+Value = \(P(D/+)\) Negative Predicted Value = \(P(D'/-)\)
+
+\hypertarget{likelihood-ratio}{%
+\subsubsection{Likelihood ratio:}\label{likelihood-ratio}}
+
+Likelihood ratios are used for assessing the value of performing a
+diagnostic test. They use the sensitivity and specificity of the test to
+determine whether a test result usefully changes the probability that a
+condition exists. \(\frac{P(D/+)}{P(D'/+)}\)=\(\frac{P(+/D)}{P(+/D')}\)
+x \(\frac{P(D)}{P(D')}\) i.e.~ Post-test-odds= DLR+ x Pre-test-odds DLR+
+= \(\frac {Sensitivity}{1-Specificity}\) This means if DLR+ is 50 then,
+given the test is positive the probability of disease increases by 50
+times than before the test. Similarly, DLR- =
+\(\frac {1-Sensitivity}{Specificity}\) This means if DLR- is 0.003 then,
+given the test is negative the probability of disease changes by 0.003
+times than before the test.
+
+\hypertarget{expected-values}{%
+\subsection{Expected Values:}\label{expected-values}}
+
+In probability theory, the expected value of a random variable is the
+long-run average value of repetitions of the same experiment it
+represents. For example, the expected value in rolling a six-sided die
+is 3.5, because the average of all the numbers that come up is 3.5 as
+the number of rolls approaches infinity. The \textbf{expected value} or
+\textbf{mean} of a random variable is the center of its distribution
+
+For discrete random variable \(X\) with PMF \(p(x)\), it is defined as
+follows \[
+E[X] = \sum_x xp(x).
+\] \(E[X]\) represents the center of mass of a collection of locations
+and weights, \(\{x, p(x)\}\)
+
+\begin{figure}
+\centering
+\includegraphics{C:/Users/himank/Documents/R/coursera/expected.png}
+\caption{expected value}
+\end{figure}
+
+Suppose a coin is flipped and \(X\) is declared \(0\) or \(1\)
+corresponding to a head or a tail, respectively What is the expected
+value of \(X\)? \[
+E[X] = .5 \times 0 + .5 \times 1 = .5
+\]
+
+\begin{center}\includegraphics{stat-inf_files/figure-latex/unnamed-chunk-1-1} \end{center}
+
+Suppose that a die is rolled and \(X\) is the number face up What is the
+expected value of \(X\)? \[
+E[X] = 1 \times \frac{1}{6} + 2 \times \frac{1}{6} +
+3 \times \frac{1}{6} + 4 \times \frac{1}{6} +
+5 \times \frac{1}{6} + 6 \times \frac{1}{6} = 3.5
+\]
+
+\hypertarget{continous-random-vairalbe-expected-values}{%
+\subsubsection{Continous random vairalbe expected
+values:}\label{continous-random-vairalbe-expected-values}}
+
+For a continuous random variable, \(X\), with density, \(f\), the
+expected value is defined as follows \[
+E[X] = \mbox{the area under the function}~~~ t f(t)
+\]
+
+Consider a density where \(f(x) = 1\) for \(x\) between zero and one
+Suppose that \(X\) follows this density; what is its expected value?\\
+\textbf{0.5}
+\includegraphics{stat-inf_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\hypertarget{variance}{%
+\section{Variance:}\label{variance}}
+
+The variance of a random variable is a measure of its spread. If \(X\)
+is a random variable with mean \(\mu\), the variance of \(X\) is defined
+as
+
+\[Var(X) = E[(X - \mu)^2]\]
+
+the expected (squared) distance from the mean
+
+\[Var(X) = E[X^2] - E[X]^2\]
+
+The square root of the variance is called the \textbf{standard
+deviation}.
+
+What's the sample variance from the result of a toss of a die?
+
+\$ E{[}X{]} = 3.5 \$ \[
+E[X^2] = 1 ^ 2 \times \frac{1}{6} + 2 ^ 2 \times \frac{1}{6} + 3 ^ 2 \times \frac{1}{6} + 4 ^ 2 \times \frac{1}{6} + 5 ^ 2 \times \frac{1}{6} + 6 ^ 2 \times \frac{1}{6} = 15.17
+\]
+
+\(Var(X) = E[X^2] - E[X]^2 \approx 2.92\)
+
+What's the sample variance from the result of the toss of a coin with
+probability of heads (1) of \(p\)?
+\(E[X] = 0 \times (1 - p) + 1 \times p = p\) \(E[X^2] = E[X] = p\)
+\(Var(X) = E[X^2] - E[X]^2 = p - p^2 = p(1 - p)\)
+
+\hypertarget{standard-error}{%
+\subsection{Standard Error:}\label{standard-error}}
+
+The standard error (SE) of a statistic (usually an estimate of a
+parameter) is the standard deviation of its sampling distribution{[}1{]}
+or an estimate of that standard deviation. If the parameter or the
+statistic is the mean, it is called the standard error of the mean
+(SEM). The variance of sample mean is \(\frac{\sigma^2}{n}\). Its
+logical estimate is \(\frac{s^2}{n}\) The standard error of the mean:
+\(\frac{s}{\sqrt{n}}\) Here, S,the standard deviation, talks about how
+variable the population is \(\frac{S}{\sqrt{n}}\) talks about how
+variable the averages of random samples of size n from population are.
+
+\hypertarget{common-distributions}{%
+\section{Common Distributions:}\label{common-distributions}}
+
+A probability distribution is a mathematical function that provides the
+probabilities of occurrence of different possible outcomes in an
+experiment.
+
+\hypertarget{binomial-distribution}{%
+\subsection{Binomial Distribution:}\label{binomial-distribution}}
+
+The \textbf{Bernoulli distribution} arises as the result of a binary
+outcome
+
+\begin{itemize}
+\item
+  Bernoulli random variables take only the values 1 and 0 with
+  probabilities of \(p\) and \(1-p\) respectively
+\item
+  The PMF for a Bernoulli random variable \(X\) is
+  \[P(X = x) =  p^x (1 - p)^{1 - x}\]
+\item
+  The mean of a Bernoulli random variable is \(p\) and the variance is
+  \(p(1 - p)\)
+\item
+  If we let \(X\) be a Bernoulli random variable, it is typical to call
+  \(X=1\) as a ``success'' and \(X=0\) as a ``failure''
+\end{itemize}
+
+The \emph{binomial random variables} are obtained as the sum of iid
+Bernoulli trials
+
+\begin{itemize}
+\item
+  In specific, let \(X_1,\ldots,X_n\) be iid Bernoulli\((p)\); then
+  \(X = \sum_{i=1}^n X_i\) is a binomial random variable
+\item
+  The binomial mass function is
+\end{itemize}
+
+\[P(X = x) = \left(\begin{array}{c}n \\ x\end{array}\right)p^x(1 - p)^{n-x}\]
+
+for \(x=0,\ldots,n\)
+
+\begin{itemize}
+\item
+  Suppose a friend has \(8\) children (oh my!), \(7\) of which are girls
+  and none are twins
+\item
+  If each gender has an independent \(50\)\% probability for each birth,
+  what's the probability of getting \(7\) or more girls out of \(8\)
+  births?
+\end{itemize}
+
+\[\left(\begin{array}{c}8 \\ 7\end{array}\right) .5^{7}(1-.5)^{1}+\left(\begin{array}{c}8 \\ 8\end{array}\right) .5^{8}(1-.5)^{0} \approx 0.04\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{choose}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{7}\NormalTok{) }\OperatorTok{*}\StringTok{ }\FloatTok{.5} \OperatorTok{^}\StringTok{ }\DecValTok{8} \OperatorTok{+}\StringTok{ }\KeywordTok{choose}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{8}\NormalTok{) }\OperatorTok{*}\StringTok{ }\FloatTok{.5} \OperatorTok{^}\StringTok{ }\DecValTok{8} 
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.03515625
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pbinom}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DataTypeTok{size =} \DecValTok{8}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{.5}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.03515625
+\end{verbatim}
+
+\hypertarget{the-normal-distribution}{%
+\subsection{The normal distribution}\label{the-normal-distribution}}
+
+\begin{itemize}
+\item
+  A random variable is said to follow a \textbf{normal} or
+  \textbf{Gaussian} distribution with mean \(\mu\) and variance
+  \(\sigma^2\) if the associated density is
+  \[(2\pi \sigma^2)^{-1/2}e^{-(x - \mu)^2/2\sigma^2}\]
+
+  If \(X\) a RV with this density then \(E[X] = \mu\) and
+  \(Var(X) = \sigma^2\)
+\item
+  We write \(X\sim \mbox{N}(\mu, \sigma^2)\)
+\item
+  When \(\mu = 0\) and \(\sigma = 1\) the resulting distribution is
+  called \textbf{the standard normal distribution}
+\item
+  The standard normal density function is labeled \(\phi\)
+\item
+  Standard normal RVs are often labeled \(Z\)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{zvals <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\OperatorTok{-}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DataTypeTok{length =} \DecValTok{1000}\NormalTok{)}
+
+\KeywordTok{plot}\NormalTok{(zvals, }\KeywordTok{dnorm}\NormalTok{(zvals), }
+
+     \DataTypeTok{type =} \StringTok{"l"}\NormalTok{, }\DataTypeTok{lwd =} \DecValTok{3}\NormalTok{, }\DataTypeTok{frame =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"z"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"Density"}\NormalTok{)}
+
+\KeywordTok{sapply}\NormalTok{(}\OperatorTok{-}\DecValTok{3} \OperatorTok{:}\StringTok{ }\DecValTok{3}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(k) }\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v =}\NormalTok{ k))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{stat-inf_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\hypertarget{facts-about-the-normal-density}{%
+\paragraph{Facts about the normal
+density}\label{facts-about-the-normal-density}}
+
+\begin{itemize}
+\item
+  If \(X \sim \mbox{N}(\mu,\sigma^2)\) the \(Z = \frac{X -\mu}{\sigma}\)
+  is standard normal
+\item
+  If \(Z\) is standard normal
+  \[X = \mu + \sigma Z \sim \mbox{N}(\mu, \sigma^2)\]
+\item
+  The non-standard normal density is
+  \[\phi\{(x - \mu) / \sigma\}/\sigma\]
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Approximately \(68\%\), \(95\%\) and \(99\%\) of the normal density
+  lies within \(1\), \(2\) and \(3\) standard deviations from the mean,
+  respectively
+\item
+  \(-1.28\), \(-1.645\), \(-1.96\) and \(-2.33\) are the \(10^{th}\),
+  \(5^{th}\), \(2.5^{th}\) and \(1^{st}\) percentiles of the standard
+  normal distribution respectively
+\item
+  By symmetry, \(1.28\), \(1.645\), \(1.96\) and \(2.33\) are the
+  \(90^{th}\), \(95^{th}\), \(97.5^{th}\) and \(99^{th}\) percentiles of
+  the standard normal distribution respectively
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{the-poisson-distribution}{%
+\subsection{The Poisson distribution}\label{the-poisson-distribution}}
+
+\begin{itemize}
+\item
+  Used to model counts
+\item
+  The Poisson mass function is
+\end{itemize}
+
+\[P(X = x; \lambda) = \frac{\lambda^x e^{-\lambda}}{x!}\]
+
+for \(x=0,1,\ldots\)
+
+\begin{itemize}
+\item
+  The mean of this distribution is \(\lambda\)
+\item
+  The variance of this distribution is \(\lambda\)
+\item
+  Notice that \(x\) ranges from \(0\) to \(\infty\)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{some-uses-for-the-poisson-distribution}{%
+\subsection{Some uses for the Poisson
+distribution}\label{some-uses-for-the-poisson-distribution}}
+
+\begin{itemize}
+\item
+  Modeling event/time data
+\item
+  Modeling radioactive decay
+\item
+  Modeling survival data
+\item
+  Modeling unbounded count data
+\item
+  Modeling contingency tables
+\item
+  Approximating binomials when \(n\) is large and \(p\) is small
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics{C:/Users/himank/Documents/R/coursera/poisson.png}
+\caption{poisson}
+\end{figure}
+
+Poisson random variables are used to model rates
+
+\(X \sim Poisson(\lambda t)\) where \(\lambda = E[X / t]\) is the
+expected count per unit of time \(t\) is the total monitoring time
+
+\hypertarget{central-limit-theorm-law-of-large-numbers}{%
+\subsection{Central Limit Theorm \& Law of Large
+Numbers:}\label{central-limit-theorm-law-of-large-numbers}}
+
+In probability theory, the central limit theorem (CLT) establishes that,
+in some situations, when independent random variables are added, their
+properly normalized sum tends toward a normal distribution (a ``bell
+curve'') even if the original variables themselves are not normally
+distributed.
+\includegraphics{C:/Users/himank/Documents/R/coursera/CLt.png}
+
+The law of large numbers (LLN) is a theorem that describes the result of
+performing the same experiment a large number of times. According to the
+law, the average of the results obtained from a large number of trials
+should be close to the expected value, and will tend to become closer as
+more trials are performed.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n <-}\StringTok{ }\DecValTok{10000}\NormalTok{; means <-}\StringTok{ }\KeywordTok{cumsum}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(n)) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\DecValTok{1}  \OperatorTok{:}\StringTok{ }\NormalTok{n)}
+\KeywordTok{plot}\NormalTok{(}\DecValTok{1} \OperatorTok{:}\StringTok{ }\NormalTok{n, means, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{frame =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"cumulative means"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"sample size"}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{stat-inf_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\hypertarget{confidence-intervals}{%
+\section{Confidence Intervals:}\label{confidence-intervals}}
+
+In statistics, a confidence interval (CI) is a type of interval
+estimate, computed from the statistics of the observed data, that might
+contain the true value of an unknown population parameter.
+
+\begin{itemize}
+\item
+  Therefore, according to the CLT, the probability that the random
+  interval \[\bar X_n \pm z_{1-\alpha/2}\times\sigma / \sqrt{n}\]
+  contains \(\mu\) is approximately 100\((1-\alpha)\)\%, where
+  \(z_{1-\alpha/2}\) is the \(1-\alpha/2\) quantile of the standard
+  normal distribution
+\item
+  This is called a \(100(1 - \alpha)\)\% \textbf{confidence interval}
+  for \(\mu\)
+\item
+  We can replace the unknown \(\sigma\) with \(s\)
+\end{itemize}
+
+\hypertarget{poisson-interval}{%
+\subsection{Poisson interval}\label{poisson-interval}}
+
+\begin{itemize}
+\item
+  A nuclear pump failed 5 times out of 94.32 days, give a 95\%
+  confidence interval for the failure rate per day?
+\item
+  \(X \sim Poisson(\lambda t)\).
+\item
+  Estimate \(\hat \lambda = X/t\)
+\item
+  \(Var(\hat \lambda) = \lambda / t\)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{5}\NormalTok{; t <-}\StringTok{ }\FloatTok{94.32}\NormalTok{; lambda <-}\StringTok{ }\NormalTok{x }\OperatorTok{/}\StringTok{ }\NormalTok{t}
+
+\KeywordTok{round}\NormalTok{(lambda }\OperatorTok{+}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{qnorm}\NormalTok{(.}\DecValTok{975}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(lambda }\OperatorTok{/}\StringTok{ }\NormalTok{t), }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.007 0.099
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{poisson.test}\NormalTok{(x, }\DataTypeTok{T =} \FloatTok{94.32}\NormalTok{)}\OperatorTok{$}\NormalTok{conf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.01721254 0.12371005
+## attr(,"conf.level")
+## [1] 0.95
+\end{verbatim}
+
+
+\end{document}
