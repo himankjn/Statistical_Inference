@@ -3,8 +3,8 @@ title: "Statistical Inference"
 author: "Himank Jain"
 date: "08/08/2019"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 # Probability:
@@ -35,7 +35,7 @@ A probability mass function evaluated at a value corresponds to the probability 
 2) $\sum p=1$
 
 Example: Consider rolling a fair (unbiased) dice. The probability of any face turning up is $1/6$.
-![dice pmf](D:/coursera/statsInference/pmf.png)
+![dice pmf](pmf.png)
 
 ## Probability Density Function:
 A probability density function (pdf) is a function associated  with a continuous random variable.
@@ -44,7 +44,7 @@ A valid pdf must satisfy:
 2) $$ \int p(x)dx=1 $$
 Total area under the curve is equal to $1$.
 Area under pdf correspond to probability for that random variable.
-![pdf](D:/coursera/statsInference/pdf.png)
+![pdf](pdf.png)
 
 ### Cumulative Distribution Function & Survival Function:
 Cumulative Distribution Function (CDF) of a random variable $X$, returns the probability that the random variable is less than or equal to the value $x$
@@ -58,7 +58,7 @@ $F(x)=P(X>x)$
 In statistics and probability quantiles are cut points dividing the range of a probability distribution into continuous intervals with equal probabilities, or dividing the observations in a sample in the same way. There is one fewer quantile than the number of groups created. Thus quartiles are the three cut points that will divide a dataset into four equal-sized groups. 
 A quartile is a type of quantile. The first quartile (Q1) is defined as the middle number between the smallest number and the median of the data set. The second quartile (Q2) is the median of the data. The third quartile (Q3) is the middle value between the median and the highest value of the data set. 
 
-![quartiles](D:/coursera/statsInference/quartiles.png)
+![quartiles](quartiles.png)
 
 # Conditional Probability:
 
@@ -104,7 +104,7 @@ E[X] = \sum_x xp(x).
 $$
 $E[X]$ represents the center of mass of a collection of locations and weights, $\{x, p(x)\}$
 
-![expected value](D:/coursera/statsInference/expected.png)
+![expected value](expected.png)
   
 Suppose a coin is flipped and $X$ is declared $0$ or $1$ corresponding to a head or a tail, respectively
 What is the expected value of $X$? 
@@ -303,7 +303,7 @@ for $x=0,1,\ldots$
 
 
 
-![POIS](D:/coursera/statsInference/pois.png)
+![POIS](pois.png)
 
 Poisson random variables are used to model rates
 
@@ -314,7 +314,7 @@ $t$ is the total monitoring time
 
 ## Central Limit Theorm & Law of Large Numbers:
 In probability theory, the central limit theorem (CLT) establishes that, in some situations, when independent random variables are added, their properly normalized sum tends toward a normal distribution (a "bell curve") even if the original variables themselves are not normally distributed.
-![CLT](D:/coursera/statsInference/CLt.png)
+![CLT](CLt.png)
 
 The law of large numbers (LLN) is a theorem that describes the result of performing the same experiment a large number of times. According to the law, the average of the results obtained from a large number of trials should be close to the expected value, and will tend to become closer as more trials are performed. 
 ```{r, fig.height=4, fig.width=4}
@@ -436,20 +436,24 @@ mn <- mean(difference); s <- sd(difference); n <- 10
 mn + c(-1, 1) * qt(.975, n-1) * s / sqrt(n)
 
 ```
+
 ### If the groups are independent:
+
 ```{r}
 t.test(g2,g1,paired=F,var.equal = T)$conf.int
 t.test(g2,g1,paired=F,var.equal=F)$conf.int
 ```
 
 ### If the groups are dependent/paired:
+
 ```{r}
 t.test(g2,g1,paired=T)$conf.int 
 
 t.test(difference)$conf.int
 
 ```
-![sleep](D:/coursera/statsInference/sleep.png)
+
+![sleep](sleep.png)
 
 A lot of variance is explained by grouping the two groups. Pairing of independent groups can hence really mess things up!.
 
@@ -464,8 +468,8 @@ wideCW <- mutate(wideCW,
   gain = time21 - time0
 )
 ```
-![chick1](D:/coursera/statsInference/chick1.png)
-![chick2](D:/coursera/statsInference/chick2.png)
+![chick1](chick1.png)
+![chick2](chick2.png)
 
 Now let’s do a t interval comparing groups 1 and 4. We’ll show the two intervals, one assuming that the variances are equal and one assuming otherwise.
 ```{r}
